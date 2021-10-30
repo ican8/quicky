@@ -7,6 +7,10 @@ import "./App.css";
 import Navbar  from "./navbar";
 import HomePage from "./homepage";
 import NotFound  from "./notfound";
+import NewUser from "./newuser";
+import ViewRecords from "./viewrecords"
+import AddExperience from "./addexperinece";
+import NewCompany from "./newcompany";
 // const ipfs = ipfsClient({
 //   host: "ipfs.infura.io",
 //   port: 5001,
@@ -17,7 +21,7 @@ const ipfs = create(new URL('https://ipfs.infura.io:5001'))
 
 
 class App extends Component {
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
   }
@@ -45,6 +49,19 @@ class App extends Component {
     if (networkData) {
       const contract = web3.eth.Contract(Quicky.abi, networkData.address);
       this.setState({ contract });
+      let is_person = await contract.methods
+        .check_is_person(accounts[0])
+        .call();
+      if (is_person) {
+        this.state.accountType = "person";
+      } else {
+        let is_company = await contract.methods
+          .check_is_company(accounts[0])
+          .call();
+        if (is_company) {
+          this.state.accountType = "company";
+        }
+      }
     } else {
       window.alert("Smart contract not deployed to detected network.");
     }
@@ -85,6 +102,7 @@ class App extends Component {
       web3: null,
       buffer: null,
       account: null,
+      accountType: ''
     };
   }
 
@@ -92,9 +110,13 @@ class App extends Component {
     return (
       <div>
         <BrowserRouter>
-        <Navbar />
+        <Navbar accountType={this.state.accountType}/>
         <Switch>
-          <Route path='/' exact component={HomePage} />
+          <Route path='/' exact component={HomePage } />
+          <Route path='/new-user' exact component={NewUser } />
+          <Route path='/new-company' exact component={NewCompany } />
+          <Route path='/view-records' exact component={ViewRecords } />
+          <Route path='/add-experience' exact component={AddExperience } />
           <Route component={NotFound} />
         </Switch>
         </BrowserRouter>

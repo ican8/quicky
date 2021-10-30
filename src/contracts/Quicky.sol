@@ -103,14 +103,14 @@ contract Quicky {
     }
     
     function createRecord(
-        string memory _proof,
-        string memory _employer
+        string memory _employer,
+        string memory _proof
     ) 
     public{
-        require(
-            ( is_person[msg.sender] ),
-            "Only person can create record"
-        );
+        // require(
+        //     ( is_person[msg.sender] ),
+        //     "Only person can create record"
+        // );
         no_of_records += 1;
         //      uint id;
         //     string proof;
@@ -130,5 +130,27 @@ contract Quicky {
         no_of_persons = 0;
         no_of_companies = 0;
         no_of_records = 0;
+    }
+
+    function getPersonCount() public view returns (uint)
+    {
+        return no_of_persons;
+    }
+    function getCompanyCount() public view returns (uint)
+    {
+        return no_of_companies;
+    }
+    function getRecordCount() public view returns (uint)
+    {
+        return no_of_records;
+    }
+    function check_is_person(address _addr) public view returns (bool){
+        return is_person[_addr];
+    }
+    function check_is_company(address _addr) public view returns (bool){
+        return is_company[_addr];
+    }
+    function getRecord(uint i) public view returns (string memory,address,string memory,State) {
+        return (record_list[i].proof, record_list[i].employee, record_list[i].employer,record_list[i].state);
     }
 }
