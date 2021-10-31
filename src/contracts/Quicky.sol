@@ -153,4 +153,8 @@ contract Quicky {
     function getRecord(uint i) public view returns (string memory,address,string memory,State) {
         return (record_list[i].proof, record_list[i].employee, record_list[i].employer,record_list[i].state);
     }
+
+    function getName(address _addr) public view returns(string memory){
+        return companies[_addr].name;
+    }
 }

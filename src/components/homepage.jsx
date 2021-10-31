@@ -67,18 +67,21 @@ export default class HomePage extends Component {
       return (
         <div>
           <h1>Person</h1>
+          <p>Account:- {this.state.account}</p>
         </div>
       );
     } else if (this.state.accountType === "company") {
       return (
         <div>
           <h1>Company</h1>
+          <p>Account:- {this.state.account}</p>
         </div>
       );
     } else {
       return (
         <div>
           <h1>Default</h1>
+          <p>Account:- {this.state.account}</p>
         </div>
       );
     }
