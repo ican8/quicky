@@ -85,7 +85,6 @@ class ViewRecords extends Component {
     console.log("got ",Number(n)," records");
     n = Number(n);
     for (let i = 0; i < n; i++) {
-      console.log('LOOP');
       let rec = await this.state.contract.methods.getRecord(i).call();
       console.log("Record fetched => ",rec);
       if( rec[2] == this.state.name ){

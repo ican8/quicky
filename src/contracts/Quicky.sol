@@ -124,6 +124,7 @@ contract Quicky {
                 _employer,
                 State.PENDING
         );
+        record_list.push(records[no_of_records]);
     }
     
     constructor() public {
